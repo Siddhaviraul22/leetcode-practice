@@ -1,0 +1,25 @@
+// Problem: Rotate Array
+// Link: https://leetcode.com/problems/rotate-array/description/?envType=study-plan-v2&envId=top-interview-150
+
+class Solution(object):
+    def rotate(self, nums, k):
+        n = len(nums)
+        if n <= 1:
+            return
+        
+        k %= n
+        if k == 0:
+            return
+
+        # reverse entire array
+        self.reverse(nums, 0, n - 1)
+        # reverse first k elements
+        self.reverse(nums, 0, k - 1)
+        # reverse remaining elements
+        self.reverse(nums, k, n - 1)
+
+    def reverse(self, arr, l, r):
+        while l < r:
+            arr[l], arr[r] = arr[r], arr[l]
+            l += 1
+            r -= 1
