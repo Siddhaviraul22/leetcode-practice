@@ -2,29 +2,18 @@
 // Link: https://leetcode.com/problems/longest-consecutive-sequence/description/?envType=study-plan-v2&envId=top-interview-150
 
 class Solution {
-    public int longestConsecutive(int[] nums) {
-        Set<Integer> set = new HashSet<>();
-        
-        for (int num : nums) {
-            set.add(num);
-        }
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        Map<Integer, Integer> lastIndex = new HashMap<>();
 
-        int longest = 0;
-
-        for (int num : set) {
-            // only start counting if num is the start of a sequence
-            if (!set.contains(num - 1)) {
-                int currentNum = num;
-                int count = 1;
-
-                while (set.contains(currentNum + 1)) {
-                    currentNum++;
-                    count++;
+        for (int i = 0; i < nums.length; i++) {
+            if (lastIndex.containsKey(nums[i])) {
+                if (i - lastIndex.get(nums[i]) <= k) {
+                    return true;
                 }
-
-                longest = Math.max(longest, count);
             }
+            lastIndex.put(nums[i], i);
         }
-        return longest;
+        return false;
     }
 }
+
